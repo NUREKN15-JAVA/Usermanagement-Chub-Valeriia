@@ -1,4 +1,4 @@
-package main.java;
+package ua.nure.chub.main.java;
 
 import java.util.Calendar;
 import java.util.Date;

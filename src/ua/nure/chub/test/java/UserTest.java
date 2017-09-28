@@ -1,6 +1,6 @@
-package test.java;
+package ua.nure.chub.test.java;
 
-import main.java.User;
+import ua.nure.chub.main.java.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +18,7 @@ import static org.junit.Assert.fail;
 public class UserTest {
     private User user;
     private Date dateOfBirth;
+    private static final int YEAR = 1994;
 
     @Before
     public void setUp() throws Exception {
@@ -48,7 +49,10 @@ public class UserTest {
 
     @Test
     public void getAge() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        int currentYear = calendar.get(Calendar.YEAR);
         user.setDateOfBirth(dateOfBirth);
-        Assert.assertEquals(2017 - 1994, user.getAge());
+        Assert.assertEquals(currentYear - YEAR, user.getAge());
     }
 }

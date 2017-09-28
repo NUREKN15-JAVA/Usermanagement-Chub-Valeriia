@@ -1,6 +1,6 @@
 <project name="usermanagement" basedir="." default="test">
-    <property name="main-java-dir" value="src/main/java"/>
-    <property name="test-java-dir" value="src/test/java"/>
+    <property name="main-java-dir" value="src/ua/nure/chub/main/java"/>
+    <property name="test-java-dir" value="src/ua/nure/chub/test/java"/>
     <property name="build-dir" value="${basedir}/bin"/>
     <target name="clean">
         <delete dir="${build-dir}"/>
@@ -20,7 +20,7 @@
             <classpath>
                 <pathelement location="${build-dir}"/>
             </classpath>
-            <test name="UserTest"/>
+            <test name="ua.nure.chub.test.java.UserTest"/>
         </junit>
     </target>
 </project>
