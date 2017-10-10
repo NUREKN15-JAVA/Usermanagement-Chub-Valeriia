@@ -19,16 +19,6 @@
     <target name="test-compile">
         <javac srcdir="${test-java-dir}" destdir="${build-dir}"/>
     </target>
-
-    <!--<target name="test" depends="test-compile">
-        <junit>
-            <formatter type="plain"/>
-            <classpath>
-                <pathelement location="${build-dir}"/>
-            </classpath>
-            <test name="test.java.ua.nure.chub.UserTest"/>
-        </junit>
-    </target>-->
     <target name="test" depends="test-compile">
         <junit>
             <classpath>
@@ -37,9 +27,10 @@
             <formatter type="plain"/>
             <batchtest>
                 <fileset dir="src/test/java">
-                    <include name="**/*Test*.class"/>
+                    <include name="**/*Test"/>
                 </fileset>
             </batchtest>
+            <test name="test.java.ua.nure.chub.UserTest" />
         </junit>
     </target>
 </project>
