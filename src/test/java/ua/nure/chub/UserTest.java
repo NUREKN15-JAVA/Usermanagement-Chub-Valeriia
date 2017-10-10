@@ -1,6 +1,6 @@
-package ua.nure.chub.test.java;
+package test.java.ua.nure.chub;
 
-import ua.nure.chub.main.java.User;
+import main.java.ua.nure.chub.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,12 +19,13 @@ public class UserTest {
     private User user;
     private Date dateOfBirth;
     private static final int YEAR = 1994;
+    private static final int DAY = 27;
 
     @Before
     public void setUp() throws Exception {
         user = new User();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(1994, Calendar.OCTOBER, 27);
+        calendar.set(YEAR, Calendar.OCTOBER, DAY);
         dateOfBirth = calendar.getTime();
     }
 

@@ -1,4 +1,4 @@
-package ua.nure.chub.main.java;
+package main.java.ua.nure.chub;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -51,9 +51,7 @@ public class User {
             throw new IllegalStateException();
         }
         StringBuilder fullName = new StringBuilder();
-        fullName.append(getLastName());
-        fullName.append(", ");
-        fullName.append(getFirstName());
+        fullName.append(getLastName()).append(", ").append(getFirstName());
         return fullName.toString();
     }
 
