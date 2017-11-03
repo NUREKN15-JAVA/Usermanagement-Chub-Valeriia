@@ -12,16 +12,13 @@ import java.util.Properties;
  * Author Lera
  * created 23.10.2017.
  */
-public class DAOFactory {
-    private static final String USER_DAO = "main.java.ua.nure.chub.db.UserDAO";
-    private final Properties properties;
-    private static final DAOFactory INSTANCE = new DAOFactory();
+public abstract class DAOFactory {
+    protected static final String USER_DAO = "user.dao";
+    private static String DAO_FACTORY = "dao.factory";
+    protected static Properties properties;
+    private static DAOFactory instance;
 
-    public static DAOFactory getInstance() {
-        return INSTANCE;
-    }
-
-    public DAOFactory() {
+    static {
         InputStream inputStream;
         properties = new Properties();
         try {
@@ -32,25 +29,31 @@ public class DAOFactory {
         }
     }
 
-    private ConnectionFactory getConnectionFactory() {
-        String user = properties.getProperty("connection.user");
-        String password = properties.getProperty("connection.password");
-        String url = properties.getProperty("connection.url");
-        String driver = properties.getProperty("connection.driver");
-
-        return new ConnectionFactoryImpl(driver, url, user, password);
-    }
-
-    public UserDAO getUserDAO() {
-        UserDAO result = null;
-        try {
-            Class clazz = Class.forName(properties.getProperty(USER_DAO));
-            HsqldbUserDAO userDAO = (HsqldbUserDAO) clazz.newInstance();
-            userDAO.setConnectionFactory(getConnectionFactory());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+    public static synchronized DAOFactory getInstance() {
+        if (instance == null) {
+            Class factoryClass = null;
+            try {
+                factoryClass = Class.forName(properties.getProperty(DAO_FACTORY));
+                instance = (DAOFactory) factoryClass.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        return result;
+        return instance;
     }
 
+    protected DAOFactory() {
+
+    }
+
+    protected ConnectionFactory getConnectionFactory() {
+        return new ConnectionFactoryImpl(properties);
+    }
+
+    public static void init(Properties prop) {
+        properties = prop;
+        instance = null;
+    }
+
+    public abstract UserDAO getUserDAO();
 }

@@ -3,6 +3,7 @@ package main.java.ua.nure.chub.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 /**
  * Author Lera
@@ -21,6 +22,13 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
         this.url = url;
         this.user = user;
 
+    }
+
+    public ConnectionFactoryImpl(Properties properties) {
+        user = properties.getProperty("connection.user");
+        password = properties.getProperty("connection.password");
+        url = properties.getProperty("connection.url");
+        driver = properties.getProperty("connection.driver");
     }
 
     @Override
