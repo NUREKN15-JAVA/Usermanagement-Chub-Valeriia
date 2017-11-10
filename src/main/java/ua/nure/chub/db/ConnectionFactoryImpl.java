@@ -25,10 +25,14 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
     }
 
     public ConnectionFactoryImpl(Properties properties) {
-        user = properties.getProperty("connection.user");
-        password = properties.getProperty("connection.password");
-        url = properties.getProperty("connection.url");
-        driver = properties.getProperty("connection.driver");
+        //user = properties.getProperty("connection.user");
+        //password = properties.getProperty("connection.password");
+        //url = properties.getProperty("connection.url");
+        //driver = properties.getProperty("connection.driver");
+        user = "sa";
+        password = "";
+        url = "jdbc:hsqldb:file:db/usermanagement";
+        driver = "org.hsqldb.jdbcDriver";
     }
 
     @Override

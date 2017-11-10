@@ -12,7 +12,7 @@ import org.junit.Test;
  * created 23.10.2017.
  */
 
-public class DAOFactoryTest {
+public class DAOFactoryTest extends TestCase {
 
     private DAOFactory daoFactory;
 

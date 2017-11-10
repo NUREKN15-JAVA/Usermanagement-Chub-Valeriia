@@ -8,14 +8,16 @@ public class DAOFactoryImpl extends DAOFactory {
 
     @Override
     public UserDAO getUserDAO() {
-        UserDAO result = null;
+        //UserDAO result = null;
+        HsqldbUserDAO userDAO;
         try {
-            Class clazz = Class.forName(properties.getProperty(USER_DAO));
-            HsqldbUserDAO userDAO = (HsqldbUserDAO) clazz.newInstance();
+            //Class clazz = Class.forName(properties.getProperty(USER_DAO));
+            //userDAO = (HsqldbUserDAO) clazz.newInstance();
+            userDAO = new HsqldbUserDAO();
             userDAO.setConnectionFactory(getConnectionFactory());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return result;
+        return userDAO;
     }
 }

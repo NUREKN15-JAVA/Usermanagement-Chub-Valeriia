@@ -3,9 +3,6 @@ package main.java.ua.nure.chub.db;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Properties;
 
 /**
@@ -13,9 +10,9 @@ import java.util.Properties;
  * created 23.10.2017.
  */
 public abstract class DAOFactory {
-    protected static final String USER_DAO = "user.dao";
-    private static String DAO_FACTORY = "dao.factory";
+    protected static final String USER_DAO = "main.java.ua.nure.chub.db.UserDAO";
     protected static Properties properties;
+    private static String DAO_FACTORY = "dao.factory";
     private static DAOFactory instance;
 
     static {
@@ -27,6 +24,10 @@ public abstract class DAOFactory {
         } catch (IOException e) {
             throw new RuntimeException();
         }
+    }
+
+    protected DAOFactory() {
+
     }
 
     public static synchronized DAOFactory getInstance() {
@@ -42,17 +43,13 @@ public abstract class DAOFactory {
         return instance;
     }
 
-    protected DAOFactory() {
-
+    public static void init(Properties prop) {
+        properties = prop;
+        instance = null;
     }
 
     protected ConnectionFactory getConnectionFactory() {
         return new ConnectionFactoryImpl(properties);
-    }
-
-    public static void init(Properties prop) {
-        properties = prop;
-        instance = null;
     }
 
     public abstract UserDAO getUserDAO();
