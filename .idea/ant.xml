@@ -5,6 +5,10 @@
       <additionalClassPath>
         <entry path="file://$USER_HOME$/Downloads/junit-4.12.jar" />
         <entry path="file://$USER_HOME$/Downloads/hamcrest-core-1.3.jar" />
+        <entry path="file://$PROJECT_DIR$/dbunit-2.4.8.jar" />
+        <entry path="file://$USER_HOME$/Downloads/hsqldb-1.8.0.1.jar" />
+        <entry path="file://$PROJECT_DIR$/regex.jar" />
+        <entry path="file://$PROJECT_DIR$/jfcunit.jar" />
       </additionalClassPath>
     </buildFile>
   </component>
