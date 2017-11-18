@@ -14,7 +14,7 @@
     <target name="compile" depends="init">
         <javac srcdir="${main-java-dir}" destdir="${build-dir}"/>
     </target>
-
+<target name="war.exploded" depends="compile"></target>
     <target name="test-compile">
         <javac srcdir="${test-java-dir}" destdir="${build-dir}"/>
     </target>
