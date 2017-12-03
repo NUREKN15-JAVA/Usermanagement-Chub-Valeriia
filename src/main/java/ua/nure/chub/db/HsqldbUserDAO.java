@@ -16,8 +16,10 @@ public class HsqldbUserDAO implements UserDAO {
     private final String INSERT_QUERY = "INSERT INTO users (firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
     private final String DELETE_USER = "DELETE FROM users WHERE id = ?";
     private final String UPDATE_USER = "UPDATE users SET id = ?, firstname = ?, lastname = ?, dateofbirth = ? WHERE id = ?";
+    private final String SELECT_BY_NAMES = "SELECT id, firstname, lastname, dateofbirth FROM users WHERE firstname=? and lastname=?";
 
     private ConnectionFactory connectionFactory;
+
 
     public HsqldbUserDAO() {
 
@@ -34,6 +36,35 @@ public class HsqldbUserDAO implements UserDAO {
     public void setConnectionFactory(ConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;
     }
+
+    @Override
+    public Collection find(String firstName, String lastName) throws DatabaseException {
+        Collection result = new LinkedList();
+
+        try (Connection connection = connectionFactory.createConnection();
+             PreparedStatement statement = connection
+                     .prepareStatement(SELECT_BY_NAMES)) {
+
+
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                User user = new User();
+                user.setId(new Long(resultSet.getLong(1)));
+                user.setFirstName(resultSet.getString(2));
+                user.setLastName(resultSet.getString(3));
+                user.setDateOfBirth(resultSet.getDate(4));
+                result.add(user);
+            }
+        } catch (DatabaseException e) {
+            throw e;
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
+        }
+        return result;
+    }
+
 
     @Override
     public Long create(User user) throws DatabaseException {
