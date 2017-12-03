@@ -15,7 +15,7 @@ import java.util.Collection;
  * Author Lera
  * created 18.11.2017.
  */
-@WebServlet("/browse")
+
 public class BrowseServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

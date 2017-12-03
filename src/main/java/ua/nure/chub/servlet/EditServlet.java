@@ -5,7 +5,6 @@ import main.java.ua.nure.chub.db.DAOFactory;
 import main.java.ua.nure.chub.db.DatabaseException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +17,6 @@ import java.text.ParseException;
  * Author Lera
  * created 19.11.2017.
  */
-@WebServlet("/edit")
 public class EditServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -54,7 +52,7 @@ public class EditServlet extends HttpServlet {
             processUser(user);
         } catch (DatabaseException e) {
             e.printStackTrace();
-            new ServletException(e);
+            throw new ServletException(e);
         }
         req.getRequestDispatcher("/browse").forward(req, resp);
 
