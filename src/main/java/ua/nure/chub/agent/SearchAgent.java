@@ -7,6 +7,7 @@ import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
+import main.java.ua.nure.chub.User;
 import main.java.ua.nure.chub.db.DAOFactory;
 import main.java.ua.nure.chub.db.DatabaseException;
 
@@ -14,7 +15,12 @@ import java.util.Collection;
 
 public class SearchAgent extends Agent {
     private AID[] aids;
-    private SearchGui gui = null;
+    private SearchGui gui;
+
+    public SearchAgent() {
+        gui = new SearchGui(this);
+        gui.setVisible(true);
+    }
 
     @Override
     protected void setup() {
@@ -76,10 +82,9 @@ public class SearchAgent extends Agent {
         super.takeDown();
     }
 
-    public void search(String firstName, String lastName) throws SearchException {
+    public void search(String firstName, String lastName) {
         try {
-            Collection users = DAOFactory.getInstance().getUserDAO().find(firstName, lastName);
-            //Collection users = null;
+            Collection<User> users = DAOFactory.getInstance().getUserDAO().find(firstName, lastName);
             if (users.size() > 0) {
                 showUsers(users);
             } else {
@@ -90,7 +95,7 @@ public class SearchAgent extends Agent {
         }
     }
 
-    void showUsers(Collection user) {
+    void showUsers(Collection<User> user) {
         gui.addUsers(user);
     }
 

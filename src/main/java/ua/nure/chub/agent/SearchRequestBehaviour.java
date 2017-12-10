@@ -21,8 +21,8 @@ public class SearchRequestBehaviour extends Behaviour {
         if (aids != null) {
             ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
             message.setContent(firstName + "," + lastName);
-            for (int i = 0; i < aids.length; i++) {
-                message.addReceiver(aids[i]);
+            for (AID aid : aids) {
+                message.addReceiver(aid);
             }
             myAgent.send(message);
         }

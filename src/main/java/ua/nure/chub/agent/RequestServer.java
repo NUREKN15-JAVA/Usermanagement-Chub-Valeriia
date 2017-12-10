@@ -6,7 +6,10 @@ import main.java.ua.nure.chub.User;
 import main.java.ua.nure.chub.db.DAOFactory;
 import main.java.ua.nure.chub.db.DatabaseException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.StringTokenizer;
 
 public class RequestServer extends CyclicBehaviour {
 
@@ -17,7 +20,7 @@ public class RequestServer extends CyclicBehaviour {
             if (message.getPerformative() == ACLMessage.REQUEST) {
                 myAgent.send(createReply(message));
             } else {
-                Collection users = parseMessage(message);
+                Collection<User> users = parseMessage(message);
                 ((SearchAgent) myAgent).showUsers(users);
             }
         } else {
@@ -25,8 +28,8 @@ public class RequestServer extends CyclicBehaviour {
         }
     }
 
-    private Collection parseMessage(ACLMessage message) {
-        Collection users = new LinkedList();
+    private Collection<User> parseMessage(ACLMessage message) {
+        Collection<User> users = new LinkedList<>();
 
         String content = message.getContent();
         if (content != null) {
@@ -51,17 +54,16 @@ public class RequestServer extends CyclicBehaviour {
         if (tokenizer.countTokens() == 2) {
             String firstName = tokenizer.nextToken();
             String lastName = tokenizer.nextToken();
-            Collection users = null;
+            Collection<User> users;
             try {
-                users = DAOFactory.getInstance().getUserDAO().findAll();
+                users = DAOFactory.getInstance().getUserDAO().find(firstName, lastName);
             } catch (DatabaseException e) {
                 e.printStackTrace();
-                users = new ArrayList(0);
+                users = new ArrayList<>(0);
             }
 
-            StringBuffer buffer = new StringBuffer();
-            for (Iterator it = users.iterator(); it.hasNext(); ) {
-                User user = (User) it.next();
+            StringBuilder buffer = new StringBuilder();
+            for (User user : users) {
                 buffer.append(user.getId()).append(",");
                 buffer.append(user.getFirstName()).append(",");
                 buffer.append(user.getLastName()).append(";");
